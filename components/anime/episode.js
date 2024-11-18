@@ -288,7 +288,7 @@ export default function AnimeEpisode({
                       title="Providers"
                       onChange={handleChange}
                       value={providerId}
-                      className="flex items-center text-sm gap-5 rounded-[3px] bg-secondary py-1 px-3 pr-8 font-karla appearance-none cursor-pointer outline-none focus:ring-1 focus:ring-action group-hover:ring-1 group-hover:ring-action"
+                      className="flex items-center text-sm gap-5 rounded-[3px] bg-secondary py-1 px-3 pr-8 font-karla appearance-none cursor-pointer outline-none focus:ring-1 focus:ring-[#BA66DB] group-hover:ring-1 group-hover:ring-[#BA66DB]"
                     >
                       {providers.map((provider) => (
                         <option

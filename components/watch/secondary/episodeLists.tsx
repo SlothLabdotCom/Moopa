@@ -62,7 +62,7 @@ export default function EpisodeLists({
                   }&num=${selectedEpisode?.number}${dub ? `&dub=${dub}` : ""}`
                 );
               }}
-              className="flex items-center text-sm gap-5 rounded-[3px] bg-secondary py-1 px-3 pr-8 font-karla appearance-none cursor-pointer outline-none focus:ring-1 focus:ring-action group-hover:ring-1 group-hover:ring-action"
+              className="flex items-center text-sm gap-5 rounded-[3px] bg-secondary py-1 px-3 pr-8 font-karla appearance-none cursor-pointer outline-none focus:ring-1 focus:ring-[#BA66DB] group-hover:ring-1 group-hover:ring-[#BA66DB]"
             >
               {episode?.map((x) => (
                 <option key={x.id} value={x.number}>
@@ -74,7 +74,7 @@ export default function EpisodeLists({
           </div>
         )}
       </div>
-      <div className="flex flex-col gap-5 lg:pl-5 py-2 scrollbar-thin px-2 scrollbar-thumb-[#313131] scrollbar-thumb-rounded-full">
+      <div className="flex flex-col gap-5 lg:pl-5 py-2 scrollbar-thin px-2 scrollbar-thumb-[#BA66DB] scrollbar-thumb-rounded-full">
         {episode && episode.length > 0 ? (
           map?.some(
             (item: any) =>
@@ -178,10 +178,10 @@ export default function EpisodeLists({
                     item.number
                   }${dub ? `&dub=${dub}` : ""}`}
                   key={item.id}
-                  className={`bg-secondary flex-center h-[50px] rounded-lg scale-100 transition-all duration-300 ease-out ${
+                  className={`bg-[#BA66DB] flex-center h-[50px] rounded-lg scale-100 transition-all duration-300 ease-out ${
                     item.id == watchId
                       ? "pointer-events-none ring-1 ring-action text-[#5d5d5d]"
-                      : "cursor-pointer hover:scale-[1.02] ring-0 hover:ring-1 hover:shadow-lg ring-white"
+                      : "cursor-pointer hover:scale-[1.02] ring-0 hover:ring-1 hover:shadow-lg ring-"
                   }`}
                 >
                   Episode {item.number}
