@@ -342,14 +342,14 @@ export default function Home({
   return (
     <Fragment>
       <Head>
-        <title>Moopa</title>
+        <title>AnimeAbyss</title>
         <meta charSet="UTF-8"></meta>
         <link rel="icon" href="/svg/c.svg" />
-        <link rel="canonical" href="https://moopa.live/en/" />
+        <link rel="canonical" href="https://AnimeAbyss.live/en/" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="description"
-          content="Discover your new favorite anime or manga title! Moopa offers a vast library of high-quality content, accessible on multiple devices and without any interruptions. Start using Moopa today!"
+          content="Discover your new favorite anime or manga title! AnimeAbyss offers a vast library of high-quality content, accessible on multiple devices and without any interruptions. Start using AnimeAbyss today!"
         />
         <meta
           name="keywords"
@@ -359,25 +359,25 @@ export default function Home({
         <meta name="robots" content="index, follow" />
 
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://moopa.live/" />
+        <meta property="og:url" content="https://AnimeAbyss.live/" />
         <meta
           property="og:title"
-          content="Moopa - Free Anime and Manga Streaming"
+          content="AnimeAbyss - Free Anime and Manga Streaming"
         />
         <meta
           property="og:description"
-          content="Discover your new favorite anime or manga title! Moopa offers a vast library of high-quality content, accessible on multiple devices and without any interruptions. Start using Moopa today!"
+          content="Discover your new favorite anime or manga title! AnimeAbyss offers a vast library of high-quality content, accessible on multiple devices and without any interruptions. Start using AnimeAbyss today!"
         />
         <meta property="og:image" content="/preview.png" />
-        <meta property="og:site_name" content="Moopa" />
+        <meta property="og:site_name" content="AnimeAbyss" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:title"
-          content="Moopa - Free Anime and Manga Streaming"
+          content="AnimeAbyss - Free Anime and Manga Streaming"
         />
         <meta
           name="twitter:description"
-          content="Discover your new favorite anime or manga title! Moopa offers a vast library of high-quality content, accessible on multiple devices and without any interruptions. Start using Moopa today!"
+          content="Discover your new favorite anime or manga title! AnimeAbyss offers a vast library of high-quality content, accessible on multiple devices and without any interruptions. Start using AnimeAbyss today!"
         />
         <meta name="twitter:image" content="/preview.png" />
       </Head>

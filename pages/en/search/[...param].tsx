@@ -249,7 +249,7 @@ export default function Card({
   return (
     <>
       <Head>
-        <title>Moopa - search</title>
+        <title>AnimeAbyss - search</title>
         <meta name="title" content="Search" />
         <meta name="description" content="Search your favourites Anime/Manga" />
         <link rel="icon" href="/svg/c.svg" />
@@ -397,7 +397,7 @@ export default function Card({
               {loading
                 ? ""
                 : !data && (
-                    <div className="w-full text-[#ff7f57] col-span-6 items-center flex justify-center text-center font-bold font-karla xl:text-2xl">
+                    <div className="w-full text-[#BA66DB] col-span-6 items-center flex justify-center text-center font-bold font-karla xl:text-2xl">
                       Oops!<br></br> Nothing's Found...
                     </div>
                   )}

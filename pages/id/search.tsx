@@ -193,7 +193,7 @@ export default function Search({ API }: { API: string }) {
                   >
                     {x.img && (
                       <Image
-                        src={`https://aoi.moopa.live/utils/image-proxy?url=${encodeURIComponent(
+                        src={`https://aoi.AnimeAbyss.live/utils/image-proxy?url=${encodeURIComponent(
                           x.img
                         )}${`&headers=${encodeURIComponent(
                           JSON.stringify({ Referer: "https://komikindo.tv/" })

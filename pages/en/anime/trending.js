@@ -97,11 +97,11 @@ export default function TrendingAnime({ sessions }) {
   return (
     <Fragment>
       <Head>
-        <title>Moopa - Trending Anime</title>
+        <title>AnimeAbyss - Trending Anime</title>
         <meta name="title" content="Trending Anime" />
         <meta
           name="description"
-          content="Explore Top Trending Anime - Dive into the latest and most popular anime series on Moopa. From thrilling action to heartwarming romance, discover the buzzworthy shows that have everyone talking. Stream now and stay up-to-date with the hottest anime trends!"
+          content="Explore Top Trending Anime - Dive into the latest and most popular anime series on AnimeAbyss. From thrilling action to heartwarming romance, discover the buzzworthy shows that have everyone talking. Stream now and stay up-to-date with the hottest anime trends!"
         />
       </Head>
       <MobileNav sessions={sessions} />
