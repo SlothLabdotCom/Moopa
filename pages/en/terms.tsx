@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import { Navbar } from "@/components/shared/NavBar";
+import MobileNav from "@/components/shared/MobileNav";
 import Footer from '@/components/shared/footer';
 
 const Terms = () => {
@@ -11,8 +12,10 @@ const Terms = () => {
         <meta name="description" content="Terms and Conditions of Use for AnimeAbyss Anime Website" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
+
       <Navbar withNav={true} scrollP={5} shrink={true} />
 
+      <MobileNav hideProfile={true} />
       <div className="bg-black text-white px-4 md:px-12 py-16">
         <h1 className="text-center text-2xl md:text-4xl font-bold mb-8">
           AnimeAbyss Anime Website Terms and Conditions of Use
