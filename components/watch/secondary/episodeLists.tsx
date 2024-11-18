@@ -105,7 +105,7 @@ export default function EpisodeLists({
                   key={item.id}
                   className={`bg-secondary flex w-full h-[110px] rounded-lg scale-100 transition-all duration-300 ease-out ${
                     item.id == watchId
-                      ? "pointer-events-none ring-1 ring-action"
+                      ? "pointer-events-none ring-1 ring-[#BA66DB]"
                       : "cursor-pointer hover:scale-[1.02] ring-0 hover:ring-1 hover:shadow-lg ring-white"
                   }`}
                 >

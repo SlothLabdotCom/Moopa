@@ -272,7 +272,7 @@ export default function AnimeEpisode({
             {providers && (
               <div
                 onClick={() => setIsDub((prev) => !prev)}
-                className="hidden lg:flex flex-col items-center relative rounded-[3px] bg-secondary py-1 px-3 font-karla text-sm hover:ring-1 ring-action cursor-pointer group"
+                className="hidden lg:flex flex-col items-center relative rounded-[3px] bg-secondary py-1 px-3 font-karla text-sm hover:ring-1 ring-[#BA66DB] cursor-pointer group"
               >
                 {isDub ? "Dub" : "Sub"}
                 <span className="absolute pointer-events-none z-40 opacity-0 -translate-y-8 group-hover:-translate-y-10 group-hover:opacity-100 font-karla shadow-tersier shadow-md whitespace-nowrap bg-secondary px-2 py-1 rounded transition-all duration-200 ease-out">
