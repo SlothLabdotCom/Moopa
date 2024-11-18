@@ -32,7 +32,7 @@ module.exports = {
         },
       },
       boxShadow: {
-        menu: "0 0 10px 0px rgba(255, 107, 0, 0.1)",
+        menu: "0 0 10px 0px rgba(186, 102, 219, 0.1)",
         light: "0 2px 10px 2px rgba(0, 0, 0, 0.1)",
         button: "0 0px 5px 0.5px rgba(0, 0, 0, 0.1)",
       },

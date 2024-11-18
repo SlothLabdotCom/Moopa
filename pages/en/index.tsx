@@ -399,7 +399,7 @@ export default function Home({
                   onClick={() => {
                     router.push(`/en/anime/${firstTrend?.id}`);
                   }}
-                  className="p-3 text-md font-karla font-light ring-1 ring-action/50 rounded"
+                  className="p-3 text-md font-karla font-light ring-1 ring-[#BA66DB]/50 rounded"
                 >
                   START WATCHING
                 </button>

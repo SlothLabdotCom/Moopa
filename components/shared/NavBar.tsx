@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { AniListInfoTypes } from "types/info/AnilistInfoTypes";
+import Logo from '../../public/logo.png'
 
 const getScrollPosition = (el: Window | Element = window) => {
   if (el instanceof Window) {
@@ -119,13 +120,13 @@ export function Navbar({
             ) : (
               // <></>
               <Link
-                href={"/en"}
-                className={`flex-center font-outfit font-semibold pb-2 ${
-                  home ? "text-4xl text-action" : "text-white text-3xl"
-                }`}
-              >
-                moopa
-              </Link>
+              href={"/en"}
+              className={`flex-center font-outfit font-semibold pb-2 ${
+                home ? "text-4xl text-action" : "text-white text-3xl"
+              }`}
+            >
+              <Image src={Logo} alt="Logo" width={200} height={50} />
+            </Link>
             )}
           </div>
 
@@ -138,7 +139,7 @@ export function Navbar({
               <li>
                 <Link
                   href={`/en/search/anime?season=${season}&year=${year}`}
-                  className="hover:text-action/80 transition-all duration-150 ease-linear"
+                  className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
                 >
                   This Season
                 </Link>
@@ -146,7 +147,7 @@ export function Navbar({
               <li>
                 <Link
                   href="/en/search/manga"
-                  className="hover:text-action/80 transition-all duration-150 ease-linear"
+                  className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
                 >
                   Manga
                 </Link>
@@ -154,7 +155,7 @@ export function Navbar({
               <li>
                 <Link
                   href="/en/search/anime"
-                  className="hover:text-action/80 transition-all duration-150 ease-linear"
+                  className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
                 >
                   Anime
                 </Link>
@@ -162,7 +163,7 @@ export function Navbar({
               <li>
                 <Link
                   href="/en/schedule"
-                  className="hover:text-action/80 transition-all duration-150 ease-linear"
+                  className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
                 >
                   Schedule
                 </Link>
@@ -172,7 +173,7 @@ export function Navbar({
                 <li>
                   <button
                     onClick={() => signIn("AniListProvider")}
-                    className="hover:text-action/80 transition-all duration-150 ease-linear"
+                    className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
                     // className="px-2 py-1 ring-1 ring-action font-bold font-karla rounded-md"
                   >
                     Sign In
@@ -183,7 +184,7 @@ export function Navbar({
                 <li className="text-center">
                   <Link
                     href={`/en/profile/${session?.user?.name}`}
-                    className="hover:text-action/80 transition-all duration-150 ease-linear"
+                    className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
                   >
                     My List
                   </Link>
@@ -239,14 +240,14 @@ export function Navbar({
                 <div className="hidden absolute z-50 w-28 text-center -bottom-20 text-white shadow-2xl opacity-0 bg-secondary p-1 py-2 rounded-md font-karla font-light invisible group-hover:visible group-hover:opacity-100 duration-300 transition-all md:grid place-items-center gap-1">
                   <Link
                     href={`/en/profile/${session?.user?.name}`}
-                    className="hover:text-action"
+                    className="hover:text-[#BA66DB]"
                   >
                     Profile
                   </Link>
                   <button
                     type="button"
                     onClick={() => signOut({ redirect: true })}
-                    className="hover:text-action"
+                    className="hover:text-[#BA66DB]"
                   >
                     Log out
                   </button>

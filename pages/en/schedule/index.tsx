@@ -280,8 +280,8 @@ export default function Schedule({ schedule }: any) {
               <button
                 type="button"
                 onClick={() => setFilterDay("All")}
-                className={`hover:text-action transition-all duration-200 ease-out cursor-pointer ${
-                  filterDay === "All" ? "text-action" : ""
+                className={`hover:text-[#BA66DB] transition-all duration-200 ease-out cursor-pointer ${
+                  filterDay === "All" ? "text-[#BA66DB]" : ""
                 }`}
               >
                 All
@@ -296,8 +296,8 @@ export default function Schedule({ schedule }: any) {
                     setFilterDay(i);
                     setLoading(false);
                   }}
-                  className={`py-2 lg:py-0 outline-none hover:text-action transition-all duration-200 ease-out cursor-pointer ${
-                    filterDay === i ? "text-action" : ""
+                  className={`py-2 lg:py-0 outline-none hover:text-[#BA66DB] transition-all duration-200 ease-out cursor-pointer ${
+                    filterDay === i ? "text-[#BA66DB]" : ""
                   }`}
                 >
                   {i}
@@ -307,13 +307,13 @@ export default function Schedule({ schedule }: any) {
             <div className="flex gap-3">
               <ClockIcon
                 className={`w-6 h-6 cursor-pointer ${
-                  layout === 1 ? "text-action" : "text-white"
+                  layout === 1 ? "text-[#BA66DB]" : "text-white"
                 }`}
                 onClick={() => setLayout(1)}
               />
               <CalendarIcon
                 className={`w-6 h-6 cursor-pointer ${
-                  layout === 2 ? "text-action" : "text-white"
+                  layout === 2 ? "text-[#BA66DB]" : "text-white"
                 }`}
                 onClick={() => setLayout(2)}
               />
@@ -360,7 +360,7 @@ export default function Schedule({ schedule }: any) {
                         {/* {!isAired(time) && <p>Airing Next</p>} */}
                         <p
                           className={`absolute left-0 h-1.5 w-1.5 rounded-full ${
-                            isAired(+time) ? "bg-action" : "bg-gray-600" // Add a class for currently airing anime
+                            isAired(+time) ? "bg-[#BA66DB]" : "bg-gray-600" // Add a class for currently airing anime
                           }`}
                         ></p>
                       </div>
@@ -383,10 +383,10 @@ export default function Schedule({ schedule }: any) {
                                   className="w-[50px] h-[65px] object-cover shrink-0"
                                 />
                                 <div className="flex flex-col justify-center font-karla p-2">
-                                  <h1 className="font-semibold line-clamp-1 text-sm group-hover:text-action transition-all duration-200 ease-out">
+                                  <h1 className="font-semibold line-clamp-1 text-sm group-hover:text-[#BA66DB] transition-all duration-200 ease-out">
                                     {m.title.romaji}
                                   </h1>
-                                  <p className="text-gray-400 group-hover:text-action/80 transition-all duration-200 ease-out">
+                                  <p className="text-gray-400 group-hover:text-[#BA66DB]/80 transition-all duration-200 ease-out">
                                     Ep {s?.episode}{" "}
                                     {timeStamptoHour(s.airingAt)}
                                   </p>
@@ -395,7 +395,7 @@ export default function Schedule({ schedule }: any) {
                               <p
                                 key={`p_${s.id}_${index}`}
                                 className={`absolute translate-x-full top-1/2 -translate-y-1/2 h-full w-0.5 ${
-                                  isAired(+time) ? "bg-action" : "bg-gray-600" // Add a class for currently airing anime
+                                  isAired(+time) ? "bg-[#BA66DB]" : "bg-gray-600" // Add a class for currently airing anime
                                 }`}
                               ></p>
                             </>
@@ -476,8 +476,8 @@ export default function Schedule({ schedule }: any) {
                                 s.id === currentlyAiringAnime ? "" : "hidden" // Add a className for currently airing anime
                               }`}
                             >
-                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-                              <span className="relative inline-flex rounded-full h-3 w-3 bg-orange-500"></span>
+                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#BA66DB] opacity-75"></span>
+                             <span className="relative inline-flex rounded-full h-3 w-3 bg-[#BA66DB]"></span>
                               <span className="tooltip">Airing Now</span>
                             </span>
                           </p>
@@ -489,10 +489,10 @@ export default function Schedule({ schedule }: any) {
                             className="w-[50px] h-[65px] object-cover shrink-0 rounded-l"
                           />
                           <div className="flex flex-col justify-center font-karla p-2">
-                            <h1 className="font-semibold line-clamp-1 text-sm group-hover:text-action transition-all duration-200 ease-out">
+                            <h1 className="font-semibold line-clamp-1 text-sm group-hover:text-[#BA66DB] transition-all duration-200 ease-out">
                               {m.title.romaji}
                             </h1>
-                            <p className="text-gray-400 group-hover:text-action/80 transition-all duration-200 ease-out">
+                            <p className="text-gray-400 group-hover:text-[#BA66DB]/80 transition-all duration-200 ease-out">
                               Ep {s.episode} {timeStamptoHour(s.airingAt)}
                             </p>
                           </div>

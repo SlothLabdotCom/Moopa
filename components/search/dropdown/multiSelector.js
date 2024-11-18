@@ -83,7 +83,7 @@ export default function MultiSelector({
                       key={item.value}
                       className={({ active }) =>
                         `relative cursor-pointer select-none py-2 px-2 ml-2 mr-1 rounded-md ${
-                          active ? "bg-white/5 text-action" : "text-gray-300"
+                          active ? "bg-white/5 text-[#BA66DB]" : "text-gray-300"
                         }`
                       }
                       value={item}
@@ -102,7 +102,7 @@ export default function MultiSelector({
                           {selected ? (
                             <span
                               className={`absolute inset-y-0 right-0 flex items-center pl-3 pr-1 ${
-                                active ? "text-white" : "text-action"
+                                active ? "text-white" : "text-[#BA66DB]"
                               }`}
                             >
                               <CheckIcon

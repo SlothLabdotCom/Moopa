@@ -180,7 +180,7 @@ export default function ShortCutModal({ isOpen, setIsOpen }) {
                   <div className="mt-4 text-right">
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-orange-100 px-4 py-2 text-sm font-medium text-orange-900 hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-[#BA66DB] px-4 py-2 text-sm font-medium text-[#BA66DB] hover:bg-[#BA66DB]/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BA66DB] focus-visible:ring-offset-2"
                       onClick={closeModal}
                     >
                       Got it, thanks!

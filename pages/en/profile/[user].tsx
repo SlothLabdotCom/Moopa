@@ -231,11 +231,11 @@ export default function MyList({
               >
                 <li
                   onClick={() => setListFilter("all")}
-                  className={`p-2 cursor-pointer hover:text-action ${
+                  className={`p-2 cursor-pointer hover:text-[#BA66DB] ${
                     listFilter === "all" && "bg-secondary text-action"
                   }`}
                 >
-                  <h1 className={`cursor-pointer hover:text-action`}>
+                  <h1 className={`cursor-pointer hover:text-[#BA66DB]`}>
                     Show All
                   </h1>
                 </li>
@@ -243,7 +243,7 @@ export default function MyList({
                   <li
                     key={item.name}
                     onClick={() => setListFilter(item.name)}
-                    className={`cursor-pointer hover:text-action flex gap-2 p-2 duration-200 ${
+                    className={`cursor-pointer hover:text-[#BA66DB] flex gap-2 p-2 duration-200 ${
                       item.name === listFilter && "bg-secondary text-action"
                     }`}
                   >
@@ -283,7 +283,7 @@ export default function MyList({
                         return (
                           <tr
                             key={item.mediaId}
-                            className="hover:bg-orange-400 duration-150 ease-in-out group relative"
+                            className="hover:bg-[#BA66DB] duration-150 ease-in-out group relative"
                           >
                             <td className="font-medium py-2 pl-2 rounded-l-lg">
                               <div className="flex items-center gap-2">

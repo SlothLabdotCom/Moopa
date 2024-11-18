@@ -40,7 +40,7 @@ export default function AdminLayout({ children, page, setPage }) {
     <div className="relative w-screen h-screen">
       <div className="absolute flex flex-col gap-5 top-0 left-0 py-2 bg-secondary w-[14rem] h-full">
         <div className="flex flex-col px-3">
-          <p className="text-sm font-light text-action font-outfit">moopa</p>
+          <p className="text-sm font-light text-[#BA66DB] font-outfit">AnymeAbyss</p>
           <h1 className="text-2xl font-bold text-white">
             Admin <br />
             Dashboard
@@ -49,19 +49,19 @@ export default function AdminLayout({ children, page, setPage }) {
         <div className="flex flex-col px-1">
           {Navigation.map((item, index) => (
             <button
-              title="Dashboard"
+              title={item.name}
               key={item.name}
               onClick={() => {
                 setPage(item.page);
               }}
               className={`flex items-center gap-2 p-2 group ${
-                page == item.page ? "bg-image/50" : "text-txt"
-              } hover:bg-image rounded transition-colors duration-200 ease-in-out`}
+                page == item.page ? "bg-[#BA66DB]/50" : "text-[#BA66DB]"
+              } hover:bg-[#BA66DB] rounded transition-colors duration-200 ease-in-out`}
             >
               <div
                 className={`w-5 h-5 ${
-                  page == item.page ? "text-action" : "text-txt"
-                } group-hover:text-action`}
+                  page == item.page ? "text-[#BA66DB]" : "text-[#BA66DB]"
+                } group-hover:text-[#BA66DB]`}
               >
                 {item.icon}
               </div>
