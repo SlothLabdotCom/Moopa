@@ -140,7 +140,7 @@ export default function PopularAnime({ sessions }) {
                   {i.status === "RELEASING" ? (
                     <span className="dots bg-green-500" />
                   ) : i.status === "NOT_YET_RELEASED" ? (
-                    <span className="dots bg-red-500" />
+                    <span className="dots bg-[#BA66DB]" />
                   ) : null}
                   {i.title.romaji}
                 </h1>

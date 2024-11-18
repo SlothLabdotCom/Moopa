@@ -458,7 +458,7 @@ export default function Card({
                             {anime.status === "RELEASING" ? (
                               <span className="dots bg-green-500" />
                             ) : anime.status === "NOT_YET_RELEASED" ? (
-                              <span className="dots bg-red-500" />
+                              <span className="dots bg-[#BA66DB]" />
                             ) : null}
                             {anime.title.userPreferred}
                           </h1>

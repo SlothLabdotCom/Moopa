@@ -95,10 +95,10 @@ export default function DMCA() {
                 our website infringes upon your intellectual property rights and
                 you hold the copyright for that content, please report it to{" "}
                 <a
-                  href="mailto:contact@AnimeAbyss.live?subject=[AnimeAbyss]%20-%20Your%20Subject"
+                  href="mailto://animeabyss@tuta.io"
                   className="font-semibold"
                 >
-                  contact@AnimeAbyss.live
+                  animeabyss@tuta.io
                 </a>{" "}
                 and the content will be immediately removed.
               </p>

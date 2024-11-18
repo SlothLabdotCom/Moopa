@@ -416,7 +416,7 @@ export default function Content({
                           ids === "recentAdded" ? (
                             <span className="dots bg-green-500" />
                           ) : anime.status === "NOT_YET_RELEASED" ? (
-                            <span className="dots bg-red-500" />
+                            <span className="dots bg-[#BA66DB]" />
                           ) : null}
                           {anime.title.romaji}
                         </h1>
