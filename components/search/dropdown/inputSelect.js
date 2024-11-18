@@ -95,7 +95,11 @@ export default function InputSelect({
                             active ? "text-white" : "text-action"
                           }`}
                         >
-                          <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                          <CheckIcon
+                            className="h-5 w-5"
+                            aria-hidden="true"
+                            style={{ color: active ? "#BA66DB" : "#BA66DB" }}
+                          />
                         </span>
                       ) : null}
                     </React.Fragment>
