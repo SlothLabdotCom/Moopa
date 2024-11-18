@@ -13,6 +13,32 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Scrollbar for WebKit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #201f1f; /* Background of the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #BA66DB; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounds the corners of the scrollbar */
+  border: 2px solid #201f1f; /* Optional border around the thumb */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin; /* Makes scrollbar thinner */
+  scrollbar-color: #BA66DB #201f1f; /* Thumb color, then track color */
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --media-brand: 245 245 245;
   --media-focus: 78 156 246;

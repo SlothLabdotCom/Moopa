@@ -154,7 +154,7 @@ export default function Details({
           info.genres?.map((item, index) => (
             <div
               key={index}
-              className="border border-action text-gray-100 py-1 px-2 rounded-md font-karla text-sm"
+              className="border border-[#BA66DB] text-gray-100 py-1 px-2 rounded-md font-karla text-sm"
             >
               {item}
             </div>
