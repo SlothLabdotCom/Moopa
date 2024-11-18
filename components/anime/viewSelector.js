@@ -43,7 +43,7 @@ export default function ViewSelector({ view, setView, episode, map }) {
                   ) || !episode
                   ? "fill-[#1c1c22]"
                   : view === 1
-                  ? "fill-action"
+                  ? "fill-[#BA66DB]"
                   : "fill-[#3A3A44]"
                 : "fill-[#1c1c22]"
             }`}
@@ -88,7 +88,7 @@ export default function ViewSelector({ view, setView, episode, map }) {
                 ) || !episode
                 ? "fill-[#1c1c22]"
                 : view === 2
-                ? "fill-action"
+                ? "fill-[#BA66DB]"
                 : "fill-[#3A3A44]"
               : "fill-[#1c1c22]"
           }`}
@@ -115,7 +115,7 @@ export default function ViewSelector({ view, setView, episode, map }) {
           className={`${
             episode?.length > 0
               ? view === 3
-                ? "fill-action"
+                ? "fill-[#BA66DB]"
                 : "fill-[#3A3A44]"
               : "fill-[#1c1c22]"
           }`}

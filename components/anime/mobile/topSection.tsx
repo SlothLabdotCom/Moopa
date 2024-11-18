@@ -350,7 +350,7 @@ export default function DetailTop({
                         />
                       </div>
                       <div className="h-full grid px-3 items-center">
-                        <div className="text-action font-outfit font-bold capitalize">
+                        <div className="text-[#BA66DB] font-outfit font-bold capitalize">
                           {r.relationType.replace(/_/g, " ")}
                         </div>
                         <div className="font-outfit line-clamp-2">
