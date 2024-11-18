@@ -24,7 +24,7 @@ export default function Custom404() {
           alt="404"
           className="w-[26vw] md:w-[15vw]"
         />
-        <h1 className="text-2xl sm:text-4xl xl:text-6xl font-bold my-4">
+        <h1 className="text-2xl sm:text-4xl xl:text-6xl font-bold my-4 text-[#BA66DB]">
           Oops! Page not found
         </h1>
         <p className="text-base sm:text-lg xl:text-xl text-gray-300 mb-6 text-center">
@@ -36,7 +36,7 @@ export default function Custom404() {
             onClick={() => {
               router.back();
             }}
-            className="flex items-center gap-2 py-2 px-4 ring-1 ring-action/70 rounded hover:text-white transition-all duration-200 ease-out"
+            className="flex items-center gap-2 py-2 px-4 ring-1 ring-[#BA66DB]/70 rounded hover:text-white transition-all duration-200 ease-out"
           >
             <span>
               <ArrowLeftIcon className="w-5 h-5" />
@@ -48,7 +48,7 @@ export default function Custom404() {
             onClick={() => {
               router.push("/en");
             }}
-            className="bg-action xl:text-xl text-white font-bold py-2 px-4 rounded hover:bg-opacity-80 hover:text-white transition-all duration-200 ease-out"
+            className="bg-[#BA66DB] xl:text-xl text-white font-bold py-2 px-4 rounded hover:bg-opacity-80 hover:text-white transition-all duration-200 ease-out"
           >
             Home Page
           </button>

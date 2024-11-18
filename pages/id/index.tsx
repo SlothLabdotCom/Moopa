@@ -35,7 +35,7 @@ export default function Home() {
             be available soon."
           </p>
           <Link href={`/en/`}>
-            <div className="bg-action xl:text-xl text-white font-bold py-2 px-4 rounded hover:bg-[#fb6f44]">
+            <div className="bg-[#BA66DB] xl:text-xl text-white font-bold py-2 px-4 rounded hover:bg-[#fb6f44]">
               Go back home
             </div>
           </Link>
