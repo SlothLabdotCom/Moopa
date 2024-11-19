@@ -345,7 +345,7 @@ export default function Home({
         <title>AnimeAbyss</title>
         <meta charSet="UTF-8"></meta>
         <link rel="icon" href="/svg/c.svg" />
-        <link rel="canonical" href="https://AnimeAbyss.live/en/" />
+        <link rel="canonical" href="https://animeabyss.to/en/" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="description"
@@ -359,7 +359,7 @@ export default function Home({
         <meta name="robots" content="index, follow" />
 
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://AnimeAbyss.live/" />
+        <meta property="og:url" content="https://animeabyss.to/" />
         <meta
           property="og:title"
           content="AnimeAbyss - Free Anime and Manga Streaming"

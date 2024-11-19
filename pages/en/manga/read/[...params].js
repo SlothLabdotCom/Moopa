@@ -372,7 +372,7 @@ export async function getServerSideProps(context) {
 
   /*
   const { data } = await axios.get(
-    `https://beta.AnimeAbyss.live/api/v2/info/${romaji}${
+    `https://animeabyss.to/api/v2/info/${romaji}${
       english ? `/${english}` : ""
     }${native ? `/${native}` : ""}?id=${anilistId}`
   );

@@ -12,7 +12,7 @@ export default function DMCA() {
         <meta property="og:title" content="DMCA" />
         <meta
           property="og:description"
-          content="AnimeAbyss.live is committed to respecting the intellectual
+          content="animeabyss.to is committed to respecting the intellectual
                   property rights of others and complying with the Digital
                   Millennium Copyright Act (DMCA)."
         />
@@ -34,7 +34,7 @@ export default function DMCA() {
             <div className="flex flex-col gap-10">
               <div className="flex flex-col gap-3 text-[#cdcdcd]">
                 <p>
-                  AnimeAbyss.live is committed to respecting the intellectual
+                  animeabyss.to is committed to respecting the intellectual
                   property rights of others and complying with the Digital
                   Millennium Copyright Act (DMCA). We take copyright
                   infringement seriously and will respond to notices of alleged
@@ -86,9 +86,9 @@ export default function DMCA() {
               </p>
               <h1 className="text-white font-karla">DISCLAIMER:</h1>
               <p className="text-[#cdcdcd]">
-                None of the files listed on AnimeAbyss.live are hosted on our
+                None of the files listed on animeabyss.to are hosted on our
                 servers. All links point to content hosted on third-party
-                websites. AnimeAbyss.live does not accept responsibility for content
+                websites. animeabyss.to does not accept responsibility for content
                 hosted on third-party websites and has no involvement in the
                 downloading/uploading of movies. We only post links that are
                 available on the internet. If you believe that any content on
