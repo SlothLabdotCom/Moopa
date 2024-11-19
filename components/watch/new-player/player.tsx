@@ -437,7 +437,7 @@ export default function VidStack({
       load="idle"
       crossorigin="anonymous"
       src={{
-        src: defaultQuality?.url,
+        src: "https://proxy.animeabyss.to/m3u8-proxy?url=" + defaultQuality?.url + "&headers=%7B%22referer%22%3A%22https%3A%2F%2Fs3embtaku.pro%22%7D",
         type: "application/vnd.apple.mpegurl"
       }}
       onTimeUpdate={onTimeUpdate}

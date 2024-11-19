@@ -21,6 +21,7 @@ export default function Document() {
         ></meta>
       </Head>
       <body>
+        <script async type="text/javascript" src="https://s0-greate.net/p/1285698"></script>
         <Main />
         <NextScript />
       </body>

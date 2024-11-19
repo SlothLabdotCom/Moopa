@@ -283,7 +283,7 @@ async function fetchAnifyPages(id, number, provider, readId, key) {
       return JSON.parse(cached);
     }
 
-    const url = `https://api.anify.tv/pages?id=${id}&chapterNumber=${number}&providerId=${provider}&readId=${encodeURIComponent(
+    const url = `https://anify.animeabyss.to/pages?id=${id}&chapterNumber=${number}&providerId=${provider}&readId=${encodeURIComponent(
       readId
     )}`;
 
@@ -359,7 +359,7 @@ export async function getServerSideProps(context) {
   }
 
   const chapters = await (
-    await fetch("https://api.anify.tv/chapters/" + mediaId)
+    await fetch("https://anify.animeabyss.to/chapters/" + mediaId)
   ).json();
 
   if ((dataManga && dataManga?.error) || dataManga?.length === 0) {

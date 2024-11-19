@@ -20,7 +20,7 @@ export async function fetchInfo(
 ): Promise<{ id: string } | null> {
   try {
     const { data: getManga }: AxiosResponse<SearchResult> = await axios.get(
-      `https://api.anify.tv/search-advanced?query=${
+      `https://anify.animeabyss.to/search-advanced?query=${
         english || romaji
       }&type=manga`
     );
