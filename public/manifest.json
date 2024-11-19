@@ -4,8 +4,8 @@
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
-  "name": "Moopa",
-  "short_name": "moopa",
+  "name": "AnimeAbyss.to",
+  "short_name": "AnimeAbyss",
   "description": "Watch and Read your favorite Anime/Manga in one single app",
   "icons": [
     {
