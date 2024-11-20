@@ -52,10 +52,7 @@ export const authOptions: NextAuthOptions = {
 
           if (!userLists?.includes("Watched using AnimeAbyss")) {
             custLists.push("Watched using AnimeAbyss");
-            const fetchGraphQL = async (
-              query: string,
-              variables: { lists: any }
-            ) => {
+            const fetchGraphQL = async (query: string, variables: { lists: any }) => {
               const response = await fetch("https://graphql.anilist.co/", {
                 method: "POST",
                 headers: {
@@ -106,6 +103,43 @@ export const authOptions: NextAuthOptions = {
         };
       },
     },
+    {
+      id: "animeabyssProvider",
+      name: "Anime Abyss",
+      type: "credentials",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: credentials?.email,
+            password: credentials?.password,
+          }),
+        });
+
+        const user = await res.json();
+
+        if (res.ok && user) {
+          return {
+            token: user.token,
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            image: user.avatar || "",
+            list: [],
+            settings: user.setting,
+          };
+        } else {
+          return null;
+        }
+      },
+    },
   ],
   session: {
     //Sets the session to use JSON Web Token
@@ -115,7 +149,7 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       return { ...token, ...user };
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       session.user = token;
       return session;
     },

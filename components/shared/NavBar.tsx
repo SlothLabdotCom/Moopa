@@ -6,9 +6,10 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { AniListInfoTypes } from "types/info/AnilistInfoTypes";
-import Logo from '../../public/logo.png'
+import Logo from '../../public/logo.png';
+import axios from "axios";
 
 const getScrollPosition = (el: Window | Element = window) => {
   if (el instanceof Window) {
@@ -45,27 +46,101 @@ export function Navbar({
 }: NavbarProps) {
   const { data: session }: { data: any } = useSession();
   const router = useRouter();
-  const [scrollPosition, setScrollPosition] = useState<
-    { x: number; y: number } | undefined
-  >();
+  const [scrollPosition, setScrollPosition] = useState<{ x: number; y: number } | undefined>();
   const { setIsOpen } = useSearch();
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+  const handleModalToggle = () => {
+    setModalOpen(!modalOpen);
+  };
+
+  const handleRegisterToggle = () => {
+    setIsRegistering(!isRegistering);
+  };
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+  
+    try {
+      // Prepare payload depending on whether it's login or registration
+      const payload = isRegistering
+        ? {
+            email: userEmail,
+            password: password,
+            name: username,
+            password_confirmation: confirmPassword,
+          }
+        : {
+            email: userEmail,
+            password: password,
+          };
+  
+      // Define the correct API endpoint for registration or login
+      const url = `${API_URL}/api/${isRegistering ? "register" : "login"}`;
+  
+      // Make the POST request to the backend
+      const response = await axios.post(url, payload, {
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+      });
+  
+      // Log the response data (which includes token and user data)
+      console.log(`${isRegistering ? "Registered" : "Logged in"} successfully:`, response.data);
+
+      // Check if the login was successful and if a token is available
+      if (response.data.token) {
+        const token = response.data.token;
+        
+        // Store the token in localStorage or state
+        localStorage.setItem("authToken", token);  // You can also use sessionStorage or context state
+  
+        // Optionally, handle any further actions like redirecting or updating the app state
+        console.log("Token saved:", token);
+      } else {
+        console.error("No token received in the response.");
+      }
+  
+    } catch (error: any) {
+      // Handle any errors during the request
+      if (error.response) {
+        console.error(
+          `${isRegistering ? "Registration" : "Login"} failed:`,
+          error.response.data
+        );
+      } else {
+        console.error("An unexpected error occurred:", error.message);
+      }
+    }
+  };
 
   const year = new Date().getFullYear();
   const season = getCurrentSeason();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollPosition(getScrollPosition());
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        setModalOpen(false);
+      }
     };
 
-    // Add a scroll event listener when the component mounts
-    window.addEventListener("scroll", handleScroll);
+    if (modalOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
 
-    // Clean up the event listener when the component unmounts
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, [modalOpen]);
   return (
     <>
       <nav
@@ -97,11 +172,7 @@ export function Navbar({
                   type="button"
                   className="flex-center w-7 h-7 text-white"
                   onClick={() => {
-                    back
-                      ? router.back()
-                      : manga
-                      ? router.push("/en/search/manga")
-                      : router.push("/en");
+                    back ? router.back() : manga ? router.push("/en/search/manga") : router.push("/en");
                   }}
                 >
                   <ArrowLeftIcon className="w-full h-full" />
@@ -137,29 +208,35 @@ export function Navbar({
               }`}
             >
               <li>
-                <Link
-                  href={`/en/search/anime?season=${season}&year=${year}`}
-                  className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
-                >
-                  This Season
-                </Link>
-              </li>
+              <button
+                onClick={() => {
+                  window.location.href = `/en/search/anime?season=${season}&year=${year}`;
+                }}
+                className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
+              >
+                This Season
+              </button>
+            </li>
               <li>
-                <Link
-                  href="/en/search/manga"
-                  className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
-                >
-                  Manga
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/en/search/anime"
-                  className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
-                >
-                  Anime
-                </Link>
-              </li>
+            <button
+              onClick={() => {
+                window.location.href = '/en/search/manga';
+              }}
+              className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
+            >
+              Manga
+            </button>
+          </li>
+            <li>
+              <button
+                onClick={() => {
+                  window.location.href = '/en/search/anime';
+                }}
+                className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
+              >
+                Anime
+              </button>
+            </li>
               <li>
                 <Link
                   href="/en/schedule"
@@ -169,18 +246,17 @@ export function Navbar({
                 </Link>
               </li>
 
-              {!session && (
+              {!session ? (
                 <li>
                   <button
-                    onClick={() => signIn("AniListProvider")}
+                    onClick={handleModalToggle}
                     className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
                     // className="px-2 py-1 ring-1 ring-action font-bold font-karla rounded-md"
                   >
                     Sign In
                   </button>
                 </li>
-              )}
-              {session && (
+              ) : (
                 <li className="text-center">
                   <Link
                     href={`/en/profile/${session?.user?.name}`}
@@ -200,12 +276,7 @@ export function Navbar({
               onClick={() => setIsOpen(true)}
               className="flex-center w-[26px] h-[26px]"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
                 <path
                   fill="none"
                   stroke="currentColor"
@@ -216,21 +287,16 @@ export function Navbar({
                 ></path>
               </svg>
             </button>
-            {/* <div
-                className="bg-white"
-                // title={sessions ? "Go to Profile" : "Login With AniList"}
-              > */}
+
             {session ? (
               <div className="w-7 h-7 relative flex flex-col items-center group shrink-0">
                 <button
                   type="button"
-                  onClick={() =>
-                    router.push(`/en/profile/${session?.user?.name}`)
-                  }
+                  onClick={() => router.push(`/en/profile/${session?.user?.name}`)}
                   className="rounded-full w-7 h-7 bg-white/30 overflow-hidden"
                 >
                   <Image
-                    src={session?.user?.image?.large}
+                    src={session?.user?.image?.large || "/default-avatar.png"}  // Fallback to default avatar if no image
                     alt="avatar"
                     width={50}
                     height={50}
@@ -238,53 +304,115 @@ export function Navbar({
                   />
                 </button>
                 <div className="hidden absolute z-50 w-28 text-center -bottom-20 text-white shadow-2xl opacity-0 bg-secondary p-1 py-2 rounded-md font-karla font-light invisible group-hover:visible group-hover:opacity-100 duration-300 transition-all md:grid place-items-center gap-1">
-                  <Link
-                    href={`/en/profile/${session?.user?.name}`}
-                    className="hover:text-[#BA66DB]"
-                  >
-                    Profile
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={() => signOut({ redirect: true })}
-                    className="hover:text-[#BA66DB]"
-                  >
+                <Link href={`/en/profile/${session?.user?.name || ''}`} className="hover:text-[#BA66DB]">
+                  Profile
+                </Link>
+                  <button type="button" onClick={() => signOut({ redirect: true })} className="hover:text-[#BA66DB]">
                     Log out
                   </button>
                 </div>
               </div>
             ) : (
-              <button
-                type="button"
-                onClick={() => signIn("AniListProvider")}
-                title="Login With AniList"
-                className="w-7 h-7 bg-white/30 rounded-full overflow-hidden shrink-0"
-              >
-                <UserIcon className="w-full h-full translate-y-1" />
-              </button>
+              <>
+                <button
+                  type="button"
+                  onClick={handleModalToggle}
+                  title="Login"
+                  className="w-7 h-7 bg-white/30 rounded-full overflow-hidden shrink-0"
+                >
+                  <UserIcon className="w-full h-full translate-y-1" />
+                </button>
+
+                {modalOpen && (
+              <div className="fixed top-0 left-0 w-full h-full bg-black/50 grid place-items-center z-40">
+                <div ref={modalRef} className="bg-white p-8 w-96 rounded-lg shadow-md">
+                  {/* Centered Button with Larger Size */}
+                  <button
+                    type="button"
+                    onClick={() => signIn("AniListProvider")}
+                    title="Login With AniList"
+                    className="w-20 h-20 bg-white/30 rounded-full flex items-center justify-center mx-auto transition-all duration-300 ease-in-out transform hover:scale-110"
+                  >
+                    <UserIcon className="w-12 h-12 text-gray-800" />
+                  </button>
+                  <div className="flex items-center my-4">
+                  <span className="flex-1 border-t border-gray-500"></span>
+                  <span className="mx-2 text-gray-600">OR</span>
+                  <span className="flex-1 border-t border-gray-500"></span>
+                </div>
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    {/* Email Field */}
+                    <div>
+                      <input
+                        type="text"
+                        className="w-full p-2 border rounded-md text-black"
+                        placeholder="Email"
+                        value={userEmail}
+                        onChange={(e) => setUserEmail(e.target.value)}
+                      />
+                    </div>
+
+                    {/* Username Field - Show Only When Registering */}
+                    {isRegistering && (
+                      <div>
+                        <input
+                          type="text"
+                          className="w-full p-2 border rounded-md text-black"
+                          placeholder="Username"
+                          value={username}
+                          onChange={(e) => setUsername(e.target.value)}
+                        />
+                      </div>
+                    )}
+
+                    {/* Password Field */}
+                    <div>
+                      <input
+                        type="password"
+                        className="w-full p-2 border rounded-md text-black"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </div>
+
+                    {/* Confirm Password Field - Show Only When Registering */}
+                    {isRegistering && (
+                      <div>
+                        <input
+                          type="password"
+                          className="w-full p-2 border rounded-md text-black"
+                          placeholder="Confirm Password"
+                          value={confirmPassword}
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                        />
+                      </div>
+                    )}
+                     <div className="flex flex-col space-y-4 justify-center items-center">
+                    <button
+                      type="button"
+                      onClick={handleRegisterToggle}
+                      className="text-[#BA66DB] rounded-md flex items-center justify-center"
+                    >
+                      {isRegistering ? "Already have an account?" : "Don't have an account?"}
+                    </button>
+                    <button
+                      type="submit"
+                      onClick={() => signIn("animeabyssProvider")}
+                      className="w-64 h-14 bg-[#BA66DB] text-white rounded-md flex items-center justify-center"
+                    >
+                      {isRegistering ? "Register" : "Login"}
+                    </button>
+                   </div>
+                      </form>
+                    </div>
+                  </div>
+                )}
+              </>
             )}
-            {/* </div> */}
           </div>
         </div>
       </nav>
-      {toTop && (
-        <button
-          type="button"
-          onClick={() => {
-            window.scrollTo({
-              top: 0,
-              behavior: "smooth",
-            });
-          }}
-          className={`${
-            scrollPosition?.y ?? 0 >= 180
-              ? "-translate-x-6 opacity-100"
-              : "translate-x-[100%] opacity-0"
-          } transform transition-all duration-300 ease-in-out fixed bottom-24 lg:bottom-14 right-0 z-[500]`}
-        >
-          <ArrowUpCircleIcon className="w-10 h-10 text-white" />
-        </button>
-      )}
     </>
   );
 }
