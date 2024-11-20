@@ -140,25 +140,25 @@ export default function MyList({
 
           <div className="bg-secondary font-karla rounded-md h-20 p-1 grid grid-cols-3 place-items-center text-center text-txt">
             <div>
-              <h1 className="text-action font-bold">
+              <h1 className="text-[#BA66DB] font-bold">
                 {user.statistics.anime.episodesWatched}
               </h1>
               <h2 className="text-sm">Total Episodes</h2>
             </div>
             <div>
-              <h1 className="text-action font-bold">
+              <h1 className="text-[#BA66DB] font-bold">
                 {user.statistics.anime.count}
               </h1>
               <h2 className="text-sm">Total Anime</h2>
             </div>
             {time?.days ? (
               <div>
-                <h1 className="text-action font-bold">{time.days}</h1>
+                <h1 className="text-[#BA66DB] font-bold">{time.days}</h1>
                 <h2 className="text-sm">Days Watched</h2>
               </div>
             ) : (
               <div>
-                <h1 className="text-action font-bold">{time.hours}</h1>
+                <h1 className="text-[#BA66DB] font-bold">{time.hours}</h1>
                 <h2 className="text-sm">hours</h2>
               </div>
             )}
@@ -232,7 +232,7 @@ export default function MyList({
                 <li
                   onClick={() => setListFilter("all")}
                   className={`p-2 cursor-pointer hover:text-[#BA66DB] ${
-                    listFilter === "all" && "bg-secondary text-action"
+                    listFilter === "all" && "bg-secondary text-[#BA66DB]"
                   }`}
                 >
                   <h1 className={`cursor-pointer hover:text-[#BA66DB]`}>
@@ -244,7 +244,7 @@ export default function MyList({
                     key={item.name}
                     onClick={() => setListFilter(item.name)}
                     className={`cursor-pointer hover:text-[#BA66DB] flex gap-2 p-2 duration-200 ${
-                      item.name === listFilter && "bg-secondary text-action"
+                      item.name === listFilter && "bg-secondary text-[#BA66DB]"
                     }`}
                   >
                     <h1 className="">{item.name}</h1>
