@@ -23,7 +23,7 @@ function Error({ statusCode }: any) {
         </div>
         <Link
           href="/en"
-          className="rounded ring-action/50 ring-1 p-2 font-karla bg-action bg-opacity-0 hover:bg-opacity-20 hover:scale-105 text-white transition-all duration-300"
+          className="rounded ring-[#BA66DB] ring-1 p-2 font-karla bg-action bg-opacity-0 hover:bg-[#BA66DB] hover:scale-105 text-white transition-all duration-300"
         >
           Back to home
         </Link>
