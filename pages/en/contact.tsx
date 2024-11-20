@@ -9,8 +9,8 @@ const Contact = () => {
         <h1>Contact Us</h1>
         <p>If you have any questions or comments, please email us at:</p>
         <p>
-          <a href="mailto:contact@AnimeAbyss.live?subject=[AnimeAbyss]%20-%20Your%20Subject">
-            contact@AnimeAbyss.live
+          <a href="mailto:contact@animeabyss.to?subject=[AnimeAbyss]%20-%20Your%20Subject">
+            contact@animeabyss.to
           </a>
         </p>
       </div>

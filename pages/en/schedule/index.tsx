@@ -229,7 +229,7 @@ export default function Schedule({ schedule }: any) {
         />
         <meta name="robots" content="index, follow" />
         <meta name="author" content="AnimeAbyss Team" />
-        <meta name="url" content="https://AnimeAbyss.live/en/schedule" />
+        <meta name="url" content="https://animeabyss.to/en/schedule" />
         <meta name="og:title" property="og:title" content="AnimeAbyss - Schedule" />
         <meta
           name="og:description"
@@ -237,10 +237,10 @@ export default function Schedule({ schedule }: any) {
           content="AnimeAbyss is a website where you can find all the information about your favorite anime and manga."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://AnimeAbyss.live/en/schedule" />
+        <meta property="og:url" content="https://animeabyss.to/en/schedule" />
         <meta
           property="og:image"
-          content="https://beta.AnimeAbyss.live/preview.png"
+          content="https://animeabyss.to/preview.png"
         />
         <meta
           property="og:image:alt"
@@ -253,7 +253,7 @@ export default function Schedule({ schedule }: any) {
         <meta name="twitter:creator" content="@AnimeAbyss_anime" /> */}
         <meta
           name="twitter:image"
-          content="https://beta.AnimeAbyss.live/preview.png"
+          content="https://animeabyss.to/preview.png"
         />
         <meta
           name="twitter:image:alt"

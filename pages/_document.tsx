@@ -21,8 +21,20 @@ export default function Document() {
         ></meta>
       </Head>
       <body>
+        <script async type="text/javascript" src="https://s0-greate.net/p/1285698"></script>
         <Main />
         <NextScript />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-PCZTQXXRM6"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-PCZTQXXRM6');
+            `,
+          }}
+        ></script>
       </body>
     </Html>
   );

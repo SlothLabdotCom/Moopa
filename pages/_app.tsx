@@ -12,7 +12,6 @@ import { useEffect } from "react";
 import { unixTimestampToRelativeTime } from "@/utils/getTimes";
 // import SecretPage from "@/components/secret";
 import { Toaster, toast } from "sonner";
-import ChangeLogs from "../components/shared/changelogs";
 import type { AppProps } from "next/app";
 
 export default function App({
@@ -66,7 +65,6 @@ export default function App({
                   cheatCode={"aofienaef"}
                   onCheatCodeEntered={handleCheatCodeEntered}
                 /> */}
-                <ChangeLogs />
                 <m.div
                   key={`route-${router.route}`}
                   transition={{ duration: 0.5 }}
