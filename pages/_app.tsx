@@ -44,12 +44,12 @@ export default function App({
           });
         }
       } catch (err) {
-        console.log(err);
+        console.log("Error fetching broadcast:", err);
       }
     }
     getBroadcast();
   }, []);
-
+  
   const handleCheatCodeEntered = () => {
     alert("Cheat code entered!"); // You can replace this with your desired action
   };

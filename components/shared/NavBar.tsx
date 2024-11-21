@@ -10,6 +10,7 @@ import { useRef, useEffect, useState } from "react";
 import { AniListInfoTypes } from "types/info/AnilistInfoTypes";
 import Logo from '../../public/logo.png';
 import axios from "axios";
+import { Session } from 'next-auth';
 
 const getScrollPosition = (el: Window | Element = window) => {
   if (el instanceof Window) {
@@ -44,7 +45,12 @@ export function Navbar({
   shrink = false,
   bgHover = false,
 }: NavbarProps) {
-  const { data: session }: { data: any } = useSession();
+
+  const { data: session, update } = useSession() as {
+    data: Session | null;
+    update: (data?: Partial<Session>) => Promise<Session | null>;
+  };
+
   const router = useRouter();
   const [scrollPosition, setScrollPosition] = useState<{ x: number; y: number } | undefined>();
   const { setIsOpen } = useSearch();
@@ -70,7 +76,6 @@ export function Navbar({
     event.preventDefault();
   
     try {
-      // Prepare payload depending on whether it's login or registration
       const payload = isRegistering
         ? {
             email: userEmail,
@@ -83,49 +88,65 @@ export function Navbar({
             password: password,
           };
   
-      // Define the correct API endpoint for registration or login
       const url = `${API_URL}/api/${isRegistering ? "register" : "login"}`;
   
-      // Make the POST request to the backend
       const response = await axios.post(url, payload, {
         headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
       });
   
-      // Log the response data (which includes token and user data)
-      console.log(`${isRegistering ? "Registered" : "Logged in"} successfully:`, response.data);
-
-      // Check if the login was successful and if a token is available
+      console.log(`${isRegistering ? 'Registered' : 'Logged in'} successfully:`, response.data);
+  
       if (response.data.token) {
         const token = response.data.token;
+        localStorage.setItem('authToken', token);
+  
+        // Update session with the new user data
+        console.log("Session data to update:", {
+          user: {
+            name: response.data.user?.name || username,
+            email: userEmail,
+            image: response.data.user?.image || null,
+          },
+          expires: new Date().toISOString(),
+          accessToken: response.data.token || null,
+        });
         
-        // Store the token in localStorage or state
-        localStorage.setItem("authToken", token);  // You can also use sessionStorage or context state
-  
-        // Optionally, handle any further actions like redirecting or updating the app state
-        console.log("Token saved:", token);
+        await update({
+          user: {
+            name: response.data.user?.name || username,
+            email: userEmail,
+            image: response.data.user?.image || null,
+          },
+          expires: new Date().toISOString(),
+          accessToken: response.data.token || null,
+        });
+        console.log(session);
+        handleModalToggle();
       } else {
-        console.error("No token received in the response.");
+        console.error('No token received in the response.');
       }
-  
     } catch (error: any) {
-      // Handle any errors during the request
       if (error.response) {
         console.error(
-          `${isRegistering ? "Registration" : "Login"} failed:`,
+          `${isRegistering ? 'Registration' : 'Login'} failed:`,
           error.response.data
         );
       } else {
-        console.error("An unexpected error occurred:", error.message);
+        console.error('An unexpected error occurred:', error.message);
       }
     }
   };
-
+  
   const year = new Date().getFullYear();
   const season = getCurrentSeason();
 
+  useEffect(() => {
+    console.log("Session updated:", session);
+  }, [session]);
+  
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
@@ -246,25 +267,24 @@ export function Navbar({
                 </Link>
               </li>
 
-              {!session ? (
-                <li>
-                  <button
-                    onClick={handleModalToggle}
-                    className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
-                    // className="px-2 py-1 ring-1 ring-action font-bold font-karla rounded-md"
-                  >
-                    Sign In
-                  </button>
-                </li>
-              ) : (
-                <li className="text-center">
-                  <Link
-                    href={`/en/profile/${session?.user?.name}`}
-                    className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
-                  >
-                    My List
-                  </Link>
-                </li>
+              {!session || !session.user ? (
+              <li>
+                <button
+                  onClick={handleModalToggle}
+                  className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
+                >
+                  Sign In
+                </button>
+              </li>
+            ) : (
+              <li className="text-center">
+                <Link
+                  href={`/en/profile/${session.user?.name}`}
+                  className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
+                >
+                  My List
+                </Link>
+              </li>
               )}
             </ul>
           )}
@@ -289,30 +309,37 @@ export function Navbar({
             </button>
 
             {session ? (
-              <div className="w-7 h-7 relative flex flex-col items-center group shrink-0">
-                <button
-                  type="button"
-                  onClick={() => router.push(`/en/profile/${session?.user?.name}`)}
-                  className="rounded-full w-7 h-7 bg-white/30 overflow-hidden"
-                >
-                  <Image
-                    src={session?.user?.image?.large || "/default-avatar.png"}  // Fallback to default avatar if no image
-                    alt="avatar"
-                    width={50}
-                    height={50}
-                    className="w-7 h-7 object-cover"
-                  />
-                </button>
-                <div className="hidden absolute z-50 w-28 text-center -bottom-20 text-white shadow-2xl opacity-0 bg-secondary p-1 py-2 rounded-md font-karla font-light invisible group-hover:visible group-hover:opacity-100 duration-300 transition-all md:grid place-items-center gap-1">
-                <Link href={`/en/profile/${session?.user?.name || ''}`} className="hover:text-[#BA66DB]">
-                  Profile
-                </Link>
-                  <button type="button" onClick={() => signOut({ redirect: true })} className="hover:text-[#BA66DB]">
-                    Log out
+                <div className="w-7 h-7 relative flex flex-col items-center group shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => router.push(`/en/profile/${session?.user?.name}`)}
+                    className="rounded-full w-7 h-7 bg-white/30 overflow-hidden"
+                  >
+                    <Image
+                      src={session?.user?.image || "/default-avatar.png"}
+                      alt="avatar"
+                      width={50}
+                      height={50}
+                      className="w-7 h-7 object-cover"
+                    />
                   </button>
+                  <div className="hidden group-hover:block absolute z-50 w-28 text-center -bottom-20 text-white shadow-2xl bg-secondary p-1 py-2 rounded-md font-karla font-light">
+                    <Link 
+                      href={`/en/profile/${session?.user?.name || ''}`} 
+                      className="block hover:text-[#BA66DB] mb-2"
+                    >
+                      Profile
+                    </Link>
+                    <button 
+                      type="button" 
+                      onClick={() => signOut({ redirect: true })} 
+                      className="hover:text-[#BA66DB]"
+                    >
+                      Log out
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ) : (
+              ) : (
               <>
                 <button
                   type="button"
@@ -398,7 +425,7 @@ export function Navbar({
                     </button>
                     <button
                       type="submit"
-                      onClick={() => signIn("animeabyssProvider")}
+                      // onClick={() => signIn("animeabyssProvider")}
                       className="w-64 h-14 bg-[#BA66DB] text-white rounded-md flex items-center justify-center"
                     >
                       {isRegistering ? "Register" : "Login"}
