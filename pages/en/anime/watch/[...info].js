@@ -314,16 +314,16 @@ export default function Watch({
         const op = getOp
             ? {
                 startTime:
-                  anify?.intro?.start ?? Math.round(getOp?.interval.startTime),
+                  Math.round(getOp?.interval.startTime) ?? null,
                 endTime:
-                  anify?.intro?.end ?? Math.round(getOp?.interval.endTime),
+                  Math.round(getOp?.interval.endTime) ?? null,
                 text: "Opening"
               }
             : null,
           ed = {
             startTime:
-              anify?.outro?.start ?? Math.round(getEd?.interval.startTime),
-            endTime: anify?.outro?.end ?? Math.round(getEd?.interval.endTime),
+              Math.round(getEd?.interval.startTime) ?? null,
+            endTime: Math.round(getEd?.interval.endTime) ?? null,
             text: "Ending"
           };
         const skipData = [op, ed].filter((i) => i !== null);

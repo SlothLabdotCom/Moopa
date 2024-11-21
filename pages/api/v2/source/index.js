@@ -8,7 +8,7 @@ async function consumetSource(id) {
 
     return data;
   } catch (error) {
-    console.error(error);
+    //console.error(error);
     return null;
   }
 }
@@ -44,12 +44,12 @@ export default async function handler(req, res) {
 
   const { source, providerId, watchId, episode, id, sub = "sub" } = req.body;
 
-  if (source === "anify") {
-    const data = await anifySource(providerId, watchId, episode, id, sub);
-    return res.status(200).json(data);
-  }
+  // if (source === "anify") {
+  //   const data = await anifySource(providerId, watchId, episode, id, sub);
+  //   return res.status(200).json(data);
+  // }
 
-  if (source === "consumet") {
+  if (source === "consumet" || source === "anify") {
     const data = await consumetSource(watchId);
     return res.status(200).json(data);
   }
