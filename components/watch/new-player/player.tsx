@@ -437,8 +437,12 @@ export default function VidStack({
       load="idle"
       crossorigin="anonymous"
       src={{
-        src: "https://proxy.animeabyss.to/m3u8-proxy?url=" + defaultQuality?.url + "&headers=%7B%22referer%22%3A%22https%3A%2F%2Fs3embtaku.pro%22%7D",
-        type: "application/vnd.apple.mpegurl"
+        src: defaultQuality?.url && /\.m3u8($|\?)/.test(defaultQuality.url)
+          ? "https://proxy.animeabyss.to/hls-proxy?url=" + defaultQuality?.url
+          : defaultQuality?.url,
+        type: defaultQuality?.url && /\.m3u8($|\?)/.test(defaultQuality?.url)
+          ? "application/vnd.apple.mpegurl"
+          : "video/mp4" // Adjust based on the format of `defaultQuality?.url`
       }}
       onTimeUpdate={onTimeUpdate}
       playsinline
