@@ -108,7 +108,7 @@ export default function BottomBar({
                       onClick={() => setSeekPage(x.index)}
                     >
                       <Image
-                        src={`https://aoi.animeabyss.to/utils/image-proxy?url=${encodeURIComponent(
+                        src={`https:///shiroko.co/api/image/?url=${encodeURIComponent(
                           x.url
                         )}${
                           x?.headers?.Referer

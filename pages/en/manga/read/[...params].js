@@ -12,10 +12,10 @@ import TopBar from "@/components/manga/mobile/topBar";
 import Head from "next/head";
 import ShortCutModal from "@/components/manga/modals/shortcutModal";
 import ChapterModal from "@/components/manga/modals/chapterModal";
-// import getConsumetPages from "@/lib/consumet/manga/getPage";
+import getConsumetPages from "@/lib/consumet/manga/getPage";
 import { mediaInfoQuery } from "@/lib/graphql/query";
 // import { redis } from "@/lib/redis";
-// import getConsumetChapters from "@/lib/consumet/manga/getChapters";
+import getConsumetChapters from "@/lib/consumet/manga/getChapters";
 import { toast } from "sonner";
 import axios from "axios";
 import { redis } from "@/lib/redis";
@@ -54,20 +54,19 @@ export default function Read({
 
   const router = useRouter();
 
-  // console.log({ info });
-
-  useEffect(() => {
-    toast.message("This page is still under development", {
-      description: "If you found any bugs, please report it to us!",
-      position: "top-center",
-      duration: 10000,
-    });
-  }, []);
+  // useEffect(() => {
+  //   toast.message("This page is still under development", {
+  //     description: "If you found any bugs, please report it to us!",
+  //     position: "top-center",
+  //     duration: 10000,
+  //   });
+  // }, []);
 
   useEffect(() => {
     hasRun.current = false;
-    const chapters = chaptersData.find((x) => x.providerId === provider);
-    const currentChapter = chapters.chapters?.find((x) => x.id === currentId);
+    console.log("chaptersData", chaptersData);
+    const chapters = chaptersData?.find((x) => x.providerId === provider);
+    const currentChapter = chapters?.chapters?.find((x) => x.id === currentId);
 
     setCurrentChapter(currentChapter);
     setChapter(chapters);
@@ -320,8 +319,8 @@ export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
   const accessToken = session?.user?.token || null;
 
-  // const data = await getConsumetPages(mediaId, providerId, chapterId, key);
-  // const chapters = await getConsumetChapters(mediaId, redis);
+  const data = await getConsumetPages(mediaId, providerId, chapterId, key);
+  const chapters = await getConsumetChapters(mediaId, redis);
 
   const dataManga = await fetchAnifyPages(
     mediaId,
@@ -358,9 +357,9 @@ export async function getServerSideProps(context) {
     }
   }
 
-  const chapters = await (
-    await fetch("https://anify.animeabyss.to/chapters/" + mediaId)
-  ).json();
+  // const chapters = await (
+  //   await fetch("https://anify.animeabyss.to/chapters/" + mediaId)
+  // ).json();
 
   if ((dataManga && dataManga?.error) || dataManga?.length === 0) {
     return {

@@ -26,9 +26,15 @@ export default function ChaptersComponent({
         // console.log(mangaId);
 
         if (mangaId) {
-          const Chapters = await pls.get(
-            `https://anify.animeabyss.to/chapters/${mangaId}`
+          const Manga = await pls.get(
+            `https://consumet.animeabyss.to/manga/mangadex/info/${mangaId}`
           );
+          const Chapters = [{
+                "from": "main",
+                "providerId": "mangadex",
+                "chapters": Manga?.chapters
+              }];
+          
           //   console.log("clean this balls");
 
           if (!Chapters) {

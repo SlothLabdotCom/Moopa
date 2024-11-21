@@ -141,7 +141,7 @@ export default function FirstPanel({
               ref={(el) => (imageRefs.current[index] = el)}
             >
               <Image
-                src={`https://aoi.animeabyss.to/utils/image-proxy?url=${encodeURIComponent(
+                src={`https:///shiroko.co/api/image/?url=${encodeURIComponent(
                   i.url,
                 )}${
                   i?.headers?.Referer

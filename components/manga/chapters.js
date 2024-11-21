@@ -7,6 +7,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 const ChapterSelector = ({ chaptersData, data, setWatch, mangaId }) => {
+
   const [selectedProvider, setSelectedProvider] = useState(
     chaptersData[0]?.providerId || ""
   );
@@ -16,9 +17,7 @@ const ChapterSelector = ({ chaptersData, data, setWatch, mangaId }) => {
   const [chaptersPerPage] = useState(10);
 
   useEffect(() => {
-    const selectedChapters = chaptersData.find(
-      (c) => c.providerId === selectedProvider
-    );
+    const selectedChapters = chaptersData[0];
     setChapters(selectedChapters?.chapters || []);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -118,20 +117,20 @@ const ChapterSelector = ({ chaptersData, data, setWatch, mangaId }) => {
       <div className="flex flex-col items-center z-40">
         <div className="mt-4 w-full">
           {currentChapters.map((chapter, index) => {
-            const isRead = chapter.number <= data?.mediaListEntry?.progress;
+            const isRead = chapter.chapterNumber <= data?.mediaListEntry?.progress;
             return (
               <Link
                 key={index}
                 href={`/en/manga/read/${selectedProvider}?id=${mangaId}&chapterId=${encodeURIComponent(
                   chapter.id
                 )}${data?.id?.length > 6 ? "" : `&anilist=${data.id}`}&num=${
-                  chapter.number
+                  chapter.chapterNumber
                 }`}
                 className={`flex gap-3 py-4 hover:bg-secondary odd:bg-secondary/30 even:bg-primary`}
               >
                 <div className="flex w-full">
                   <span className="shrink-0 px-4 text-center text-white/50">
-                    {chapter.number}
+                    {chapter.chapterNumber}
                   </span>
                   <p
                     className={`w-full line-clamp-1 ${
@@ -139,7 +138,7 @@ const ChapterSelector = ({ chaptersData, data, setWatch, mangaId }) => {
                     }
                     `}
                   >
-                    {chapter.title || `Chapter ${chapter.number}`}
+                    {chapter.title || `Chapter ${chapter.chapterNumber}`}
                   </p>
                   <p className="capitalize text-sm text-white/50 px-4">
                     {selectedProvider}

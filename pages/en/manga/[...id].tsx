@@ -140,7 +140,6 @@ export default function Manga({
               shallow: true,
             });
           } else {
-            // console.log("why is this running?");
             setMangaId(null);
             setLoading(false);
             setNotFound(true);

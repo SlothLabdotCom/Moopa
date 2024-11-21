@@ -37,7 +37,8 @@ export function LeftBar({
             <h1 className="font-bold xl:text-lg">Provider</h1>
             <div className="w-full px-2">
               <p className="bg-[#161617] text-sm xl:text-base capitalize rounded-md py-1 px-2">
-                {data.providerId}
+                {console.log("data", data)}
+                {data?.providerId}
               </p>
             </div>
           </div>
@@ -93,7 +94,7 @@ export function LeftBar({
                             onClick={() => setSeekPage(index)}
                           >
                             <Image
-                              src={`https://aoi.animeabyss.to/utils/image-proxy?url=${encodeURIComponent(
+                              src={`https:///shiroko.co/api/image/?url=${encodeURIComponent(
                                 x.url
                               )}${
                                 x?.headers?.Referer

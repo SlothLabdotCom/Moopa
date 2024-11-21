@@ -46,7 +46,7 @@ export function parseImageProxy(
   if (!url) return;
 
   return providerId
-    ? `https://aoi.animeabyss.to/utils/image-proxy?url=${truncateImgUrl(
+    ? `https:///shiroko.co/api/image/?url=${truncateImgUrl(
         url
       )}${`&headers=${encodeURIComponent(
         JSON.stringify({ Referer: providerId })

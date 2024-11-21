@@ -2,11 +2,7 @@ import axios, { AxiosResponse } from "axios";
 
 interface Manga {
   id: string;
-  title: {
-    romaji: string;
-    english: string;
-    native: string;
-  };
+  title: string;
 }
 
 interface SearchResult {
@@ -20,17 +16,18 @@ export async function fetchInfo(
 ): Promise<{ id: string } | null> {
   try {
     const { data: getManga }: AxiosResponse<SearchResult> = await axios.get(
-      `https://anify.animeabyss.to/search-advanced?query=${
+      `https://consumet.animeabyss.to/manga/mangadex/${
         english || romaji
-      }&type=manga`
+      }`
+    );
+    
+    const findManga = getManga?.results?.find(
+    (manga) =>
+        manga.title.toLowerCase().includes(romaji.toLowerCase()) ||
+        manga.title.toLowerCase().includes(english.toLowerCase()) ||
+        manga.title.toLowerCase().includes(native.toLowerCase())
     );
 
-    const findManga = getManga?.results?.find(
-      (manga) =>
-        manga.title.romaji === romaji ||
-        manga.title.english === english ||
-        manga.title.native === native
-    );
 
     if (!findManga) {
       return null;
@@ -50,6 +47,7 @@ export default async function getMangaId(
 ): Promise<{ id: string } | { message: string } | { error: any }> {
   try {
     const data = await fetchInfo(romaji, english, native);
+
     if (data && "id" in data) {
       return data;
     } else {

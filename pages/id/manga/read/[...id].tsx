@@ -52,7 +52,7 @@ export default function ReadNovel({ mangaId, chapterId, API }: ReadNovelProps) {
           {data?.pages?.map((i) => (
             <div key={i.index}>
               <Image
-                src={`https://aoi.animeabyss.to/utils/image-proxy?url=${encodeURIComponent(
+                src={`https:///shiroko.co/api/image/?url=${encodeURIComponent(
                   i.src
                 )}${`&headers=${encodeURIComponent(
                   JSON.stringify({ Referer: "https://komikindo.tv/" })
