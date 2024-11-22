@@ -136,30 +136,39 @@ export function Navbar({
                 home ? "justify-start" : "justify-center"
               }`}
             >
-              <li>
-                <Link
-                  href={`/en/search/anime?season=${season}&year=${year}`}
-                  className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
-                >
-                  This Season
-                </Link>
+               <li>
+              <button
+                onClick={() => {
+                  window.location.href = `/en/search/anime?season=${season}&year=${year}`;
+                }}
+                className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
+              >
+                This Season
+              </button>
               </li>
+
               <li>
-                <Link
-                  href="/en/search/manga"
-                  className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
-                >
-                  Manga
-                </Link>
+              <button
+              onClick={() => {
+                window.location.href = '/en/search/manga';
+              }}
+              className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
+            >
+              Manga
+            </button>
               </li>
+
               <li>
-                <Link
-                  href="/en/search/anime"
-                  className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
-                >
-                  Anime
-                </Link>
-              </li>
+              <button
+                onClick={() => {
+                  window.location.href = '/en/search/anime';
+                }}
+                className="transition-all duration-150 ease-linear hover:text-[#BA66DB]"
+              >
+                Anime
+              </button>
+            </li>
+            
               <li>
                 <Link
                   href="/en/schedule"
