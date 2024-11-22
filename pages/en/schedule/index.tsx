@@ -265,6 +265,7 @@ export default function Schedule({ schedule }: any) {
           content="AnimeAbyss is a website where you can find all the information about your favorite anime and manga."
         />
       </Head>
+      
       <MobileNav hideProfile={true} />
      
       <Navbar
