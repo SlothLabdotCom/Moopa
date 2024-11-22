@@ -266,7 +266,14 @@ export default function Schedule({ schedule }: any) {
         />
       </Head>
       <MobileNav hideProfile={true} />
-      <Navbar scrollP={10} toTop={true} />
+     
+      <Navbar
+        scrollP={10}
+        withNav={true}
+        shrink={true}
+        paddingY="py-1 lg:py-3"
+      />
+        
       <div className="w-screen">
         {/* <span className="absolute w-screen h-[190px] lg:h-[250px] bg-white overflow-hidden">
           <div className="w-full h-full bg-white rounded" />
@@ -510,6 +517,7 @@ export default function Schedule({ schedule }: any) {
           )}
         </div>
       </div>
+
     </>
   );
 }
