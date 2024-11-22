@@ -2,7 +2,7 @@ import { useSearch } from "@/lib/context/isOpenState";
 import { getCurrentSeason } from "@/utils/getTimes";
 import { ArrowLeftIcon, ArrowUpCircleIcon } from "@heroicons/react/20/solid";
 import { UserIcon } from "@heroicons/react/24/solid";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, signOut, useSession, getSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -74,78 +74,85 @@ export function Navbar({
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-  
+
     try {
-      const payload = isRegistering
-        ? {
+      const token = session?.user.accessToken;
+
+      // Register user if in registering mode
+      if (isRegistering) {
+        const registerResponse = await axios.post(
+          `${API_URL}/api/register`,
+          {
             email: userEmail,
             password: password,
             name: username,
             password_confirmation: confirmPassword,
+          },
+          {
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
           }
-        : {
-            email: userEmail,
-            password: password,
-          };
-  
-      const url = `${API_URL}/api/${isRegistering ? "register" : "login"}`;
-  
-      const response = await axios.post(url, payload, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-      });
-  
-      console.log(`${isRegistering ? 'Registered' : 'Logged in'} successfully:`, response.data);
-  
-      if (response.data.token) {
-        const token = response.data.token;
-        localStorage.setItem('authToken', token);
-  
-        // Update session with the new user data
-        console.log("Session data to update:", {
-          user: {
-            name: response.data.user?.name || username,
-            email: userEmail,
-            image: response.data.user?.image || null,
-          },
-          expires: new Date().toISOString(),
-          accessToken: response.data.token || null,
-        });
-        
-        await update({
-          user: {
-            name: response.data.user?.name || username,
-            email: userEmail,
-            image: response.data.user?.image || null,
-          },
-          expires: new Date().toISOString(),
-          accessToken: response.data.token || null,
-        });
-        console.log(session);
-        handleModalToggle();
-      } else {
-        console.error('No token received in the response.');
-      }
-    } catch (error: any) {
-      if (error.response) {
-        console.error(
-          `${isRegistering ? 'Registration' : 'Login'} failed:`,
-          error.response.data
         );
-      } else {
-        console.error('An unexpected error occurred:', error.message);
+
+        if (!registerResponse.data) {
+          throw new Error("Registration failed");
+        }
+
+        console.log("Registration successful");
       }
+
+      // Login user using the Laravel API
+      const loginResponse = await axios.post(
+        `${API_URL}/api/login`,
+        {
+          email: userEmail,
+          password: password,
+        },
+        {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        }
+      );
+
+      if (loginResponse?.data?.error) {
+        console.error("Authentication error:", loginResponse.data.error);
+        return;
+      }
+
+      console.log("Login successful:", loginResponse.data);
+      handleModalToggle(); // Close modal or handle UI after successful login
+
+      // Sign in with NextAuth (sending token to the animeabyssProvider)
+      const nextAuthResult = await signIn("animeabyssProvider", {
+        redirect: false,
+        email: userEmail,
+        password: password,
+        accessToken: loginResponse.data.token,
+      });
+
+      if (nextAuthResult?.error) {
+        console.error("NextAuth sign-in error:", nextAuthResult.error);
+        return; // Handle any NextAuth errors
+      }
+
+      console.log("NextAuth login successful");
+      // Optionally, handle post-login actions (e.g., redirect, fetch user data, etc.)
+
+    } catch (error: any) {
+      console.error("Error:", error);
+      // Handle error display to user
     }
   };
   
   const year = new Date().getFullYear();
   const season = getCurrentSeason();
 
+ // Log session state with useEffect
   useEffect(() => {
-    console.log("Session updated:", session);
-  }, [session]);
+    const checkSession = async () => {
+      const session = await getSession(); // Get session
+      console.log("Session updated:", session); // Log session state
+    };
+    checkSession();
+  }, []);
   
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -367,55 +374,56 @@ export function Navbar({
                   <span className="mx-2 text-gray-600">OR</span>
                   <span className="flex-1 border-t border-gray-500"></span>
                 </div>
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    {/* Email Field */}
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* Email Field */}
+                  <div>
+                    <input
+                      type="text"
+                      className="w-full p-2 border rounded-md text-black"
+                      placeholder="Email"
+                      value={userEmail}
+                      onChange={(e) => setUserEmail(e.target.value)}
+                    />
+                  </div>
+
+                  {/* Username Field - Show Only When Registering */}
+                  {isRegistering && (
                     <div>
                       <input
                         type="text"
                         className="w-full p-2 border rounded-md text-black"
-                        placeholder="Email"
-                        value={userEmail}
-                        onChange={(e) => setUserEmail(e.target.value)}
+                        placeholder="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                       />
                     </div>
+                  )}
 
-                    {/* Username Field - Show Only When Registering */}
-                    {isRegistering && (
-                      <div>
-                        <input
-                          type="text"
-                          className="w-full p-2 border rounded-md text-black"
-                          placeholder="Username"
-                          value={username}
-                          onChange={(e) => setUsername(e.target.value)}
-                        />
-                      </div>
-                    )}
+                  {/* Password Field */}
+                  <div>
+                    <input
+                      type="password"
+                      className="w-full p-2 border rounded-md text-black"
+                      placeholder="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </div>
 
-                    {/* Password Field */}
+                  {/* Confirm Password Field - Show Only When Registering */}
+                  {isRegistering && (
                     <div>
                       <input
                         type="password"
                         className="w-full p-2 border rounded-md text-black"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Confirm Password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                       />
                     </div>
+                  )}
 
-                    {/* Confirm Password Field - Show Only When Registering */}
-                    {isRegistering && (
-                      <div>
-                        <input
-                          type="password"
-                          className="w-full p-2 border rounded-md text-black"
-                          placeholder="Confirm Password"
-                          value={confirmPassword}
-                          onChange={(e) => setConfirmPassword(e.target.value)}
-                        />
-                      </div>
-                    )}
-                     <div className="flex flex-col space-y-4 justify-center items-center">
+                  <div className="flex flex-col space-y-4 justify-center items-center">
                     <button
                       type="button"
                       onClick={handleRegisterToggle}

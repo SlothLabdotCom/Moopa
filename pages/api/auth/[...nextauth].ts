@@ -1,4 +1,7 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
+import axios from "axios";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -92,68 +95,128 @@ export const authOptions: NextAuthOptions = {
       },
       clientId: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      profile(profile) {
+      profile(profile, tokens) {
         return {
-          token: profile.token,
           id: profile.sub,
-          name: profile?.name,
-          image: profile.image,
-          list: profile?.list,
+          name: profile.name || null,
+          email: profile.email || null,
+          image: profile.image?.large || null,
+          accessToken: tokens.access_token || "",
+          list: profile.list || [],
           version: "1.0.1",
         };
       },
     },
     {
-      id: "animeabyssProvider",
-      name: "Anime Abyss",
-      type: "credentials",
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+      id: "AnimeAbyssProvider",
+      name: "AnimeAbyss",
+      type: "oauth",
+      token: `${API_URL}/api/oauth/token`,
+      authorization: {
+        url: `${API_URL}/api/oauth/authorize`,
+        params: {
+          scope: "",
+          response_type: "code",
+        },
       },
-      async authorize(credentials) {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: credentials?.email,
-            password: credentials?.password,
-          }),
-        });
-
-        const user = await res.json();
-
-        if (res.ok && user) {
-          return {
-            token: user.token,
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            image: user.avatar || "",
-            list: [],
-            settings: user.setting,
-          };
-        } else {
-          return null;
-        }
+      userinfo: {
+        url: `${API_URL}/api/user`,
+        async request(context) {
+          try {
+            // Fetch the user data using the access token
+            const { data } = await axios.get(`${API_URL}/api/user`, {
+              headers: {
+                Authorization: `Bearer ${context.tokens.access_token}`,
+              },
+            });
+      
+            // Get the custom lists from the user data
+            const userLists = data.user?.mediaListOptions.animeList.customLists || [];
+            let custLists = [...userLists];
+      
+            // If the custom list "Watched using AnimeAbyss" does not exist, add it
+            if (!userLists.includes("Watched using AnimeAbyss")) {
+              custLists.push("Watched using AnimeAbyss");
+      
+              // Optionally update the custom list in the backend
+              await axios.post(
+                `${API_URL}/api/user`,
+                { customLists: custLists },
+                {
+                  headers: {
+                    Authorization: `Bearer ${context.tokens.access_token}`,
+                  },
+                }
+              );
+            }
+      
+            // Ensure the return type is of type Profile
+            const profile = {
+              id: data.user.id || null,
+              name: data.user.name || null,
+              email: data.user.email || null,
+              image: data.user.avatar?.large || null,
+              accessToken: context.tokens.access_token || "",
+              list: custLists,
+              version: "1.0.1", // Optional version
+            };
+      
+            // Return the profile as a valid Profile object (ensure no `null` return)
+            return profile;
+          } catch (error) {
+            console.error("Error fetching user info:", error);
+            // Return an empty profile object or handle the error appropriately
+            return {
+              id: null,
+              name: null,
+              email: null,
+              image: null,
+              accessToken: "",
+              list: [],
+              version: "1.0.1",
+            };
+          }
+        },
+      },      
+      clientId: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      profile(profile, tokens) {
+        // Return the profile object with relevant user data
+        return {
+          id: profile.sub,
+          name: profile.name || null,
+          email: profile.email || null,
+          image: profile.image || null,
+          accessToken: tokens.access_token || "",
+          list: profile.list || [],
+          version: "1.0.1", // Add a version if needed
+        };
       },
     },
   ],
+
   session: {
-    //Sets the session to use JSON Web Token
-    strategy: "jwt",
+    strategy: "jwt",  // Use JWT for session management
   },
+
   callbacks: {
-    async jwt({ token, user }) {
-      return { ...token, ...user };
-    },
     async session({ session, token }) {
-      session.user = token;
+      // Add the token data to the session
+      session.user.id = token.id;
+      session.user.name = token.name;
+      session.user.email = token.email;
+      session.user.image = token.image;
+      session.user.accessToken = token.accessToken;
+      session.user.provider = token.provider;
+      session.user.list = token.list;
       return session;
     },
+
+    async redirect({ url, baseUrl }) {
+      // Control where to redirect after a successful login
+      return baseUrl;
+    },
   },
-};
+}
 
 export default NextAuth(authOptions);
