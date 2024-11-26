@@ -84,7 +84,7 @@ const BugReportForm: React.FC<BugReportFormProps> = ({ isOpen, setIsOpen }) => {
               >
                 <Dialog.Panel className="w-full max-w-md transition-all">
                   <div className="bg-secondary p-6 rounded-lg shadow-xl">
-                    <h2 className={`text-action text-2xl font-semibold mb-4`}>
+                    <h2 className={`text-[#BA66DB] text-2xl font-semibold mb-4`}>
                       Report a Bug
                     </h2>
                     <form onSubmit={handleSubmit}>
@@ -100,7 +100,7 @@ const BugReportForm: React.FC<BugReportFormProps> = ({ isOpen, setIsOpen }) => {
                             id="bugDescription"
                             name="bugDescription"
                             rows={4}
-                            className={`w-full bg-image text-txt rounded-md border border-txt focus:ring-action focus:border-action transition duration-300 focus:outline-none py-2 px-3`}
+                            className={`w-full bg-image text-txt rounded-md border border-txt focus:ring-action focus:border-[#BA66DB] transition duration-300 focus:outline-none py-2 px-3`}
                             placeholder="Describe the bug you encountered..."
                             value={bugDescription}
                             onChange={(e) => setBugDescription(e.target.value)}
@@ -160,7 +160,7 @@ const BugReportForm: React.FC<BugReportFormProps> = ({ isOpen, setIsOpen }) => {
                                           {person.name}
                                         </span>
                                         {selected ? (
-                                          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-action">
+                                          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-[#BA66DB]">
                                             <CheckIcon
                                               className="h-5 w-5"
                                               aria-hidden="true"
@@ -179,7 +179,7 @@ const BugReportForm: React.FC<BugReportFormProps> = ({ isOpen, setIsOpen }) => {
                       <div className="mt-4">
                         <button
                           type="submit"
-                          className={`w-full bg-action text-white py-2 px-4 rounded-md font-semibold hover:bg-action/80 focus:ring focus:ring-action focus:outline-none transition duration-300`}
+                          className={`w-full bg-[#BA66DB] text-white py-2 px-4 rounded-md font-semibold hover:bg-[#BA66DB]/80 focus:ring focus:ring-action focus:outline-none transition duration-300`}
                         >
                           Submit Bug Report
                         </button>

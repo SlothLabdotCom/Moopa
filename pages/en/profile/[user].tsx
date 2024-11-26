@@ -178,7 +178,7 @@ export default function MyList({
                     type="checkbox"
                     checked={useCustomList}
                     onChange={handleCheckboxChange}
-                    className="accent-action"
+                    className="accent-[#BA66DB]"
                   />
                 </div>
               </div>

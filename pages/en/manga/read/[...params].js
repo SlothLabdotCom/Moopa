@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { LeftBar } from "@/components/manga/leftBar";
+import HTMLFlipBook from 'react-pageflip'
 import { useRouter } from "next/router";
-import RightBar from "@/components/manga/rightBar";
 import FirstPanel from "@/components/manga/panels/firstPanel";
 import SecondPanel from "@/components/manga/panels/secondPanel";
 import ThirdPanel from "@/components/manga/panels/thirdPanel";
@@ -14,9 +13,7 @@ import ShortCutModal from "@/components/manga/modals/shortcutModal";
 import ChapterModal from "@/components/manga/modals/chapterModal";
 import getConsumetPages from "@/lib/consumet/manga/getPage";
 import { mediaInfoQuery } from "@/lib/graphql/query";
-// import { redis } from "@/lib/redis";
 import getConsumetChapters from "@/lib/consumet/manga/getChapters";
-import { toast } from "sonner";
 import axios from "axios";
 import { redis } from "@/lib/redis";
 import getAnifyInfo from "@/lib/anify/info";
@@ -178,18 +175,6 @@ export default function Read({
             />
           </>
         )}
-        {visible && (
-          <LeftBar
-            data={chapter}
-            page={data}
-            info={info}
-            number={number}
-            mediaId={mangaDexId}
-            currentId={currentId}
-            setSeekPage={setSeekPage}
-            providerId={provider}
-          />
-        )}
         {layout === 1 && (
           <FirstPanel
             aniId={info?.id}
@@ -248,27 +233,8 @@ export default function Read({
             providerId={provider}
           />
         )}
-        {visible && (
-          <RightBar
-            id={info?.id}
-            hasRun={hasRun}
-            error={data?.error}
-            session={sessions}
-            data={data}
-            currentId={currentId}
-            currentChapter={currentChapter}
-            layout={layout}
-            setLayout={setLayout}
-            paddingX={paddingX}
-            setPaddingX={setPaddingX}
-            setIsKeyOpen={setIsKeyOpen}
-            scaleImg={scaleImg}
-            setScaleImg={setScaleImg}
-          />
-        )}
       </div>
     </>
-    // <p></p>
   );
 }
 
