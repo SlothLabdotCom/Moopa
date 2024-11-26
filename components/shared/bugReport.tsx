@@ -100,7 +100,7 @@ const BugReportForm: React.FC<BugReportFormProps> = ({ isOpen, setIsOpen }) => {
                             id="bugDescription"
                             name="bugDescription"
                             rows={4}
-                            className={`w-full bg-image text-txt rounded-md border border-txt focus:ring-action focus:border-action transition duration-300 focus:outline-none py-2 px-3`}
+                            className={`w-full bg-image text-txt rounded-md border border-txt focus:ring-action focus:border-[#BA66DB] transition duration-300 focus:outline-none py-2 px-3`}
                             placeholder="Describe the bug you encountered..."
                             value={bugDescription}
                             onChange={(e) => setBugDescription(e.target.value)}
