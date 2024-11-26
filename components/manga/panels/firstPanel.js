@@ -171,6 +171,7 @@ export default function FirstPanel({
                 quality={imageQuality}
                 onClick={() => setMobileVisible(!mobileVisible)}
                 className="w-auto max-w-full h-auto max-h-full bg-[#bbb] object-contain"
+                priority
               />
             </div>
           ))}
@@ -196,6 +197,7 @@ export default function FirstPanel({
                 width={500}
                 height={680}
                 quality={imageQuality}
+                priority
               />
             </div>
           ))}
