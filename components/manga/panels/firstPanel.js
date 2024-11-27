@@ -14,6 +14,7 @@ import { getHeaders, getRandomId } from "@/utils/imageUtils";
 import HTMLFlipBook from "react-pageflip";
 import { Navbar } from "@/components/shared/NavBar";
 import MobileNav from "@/components/shared/MobileNav";
+import TopBar from "@/components/manga/mobile/topBar";
 
 export default function FirstPanel({
   aniId,
@@ -42,6 +43,21 @@ export default function FirstPanel({
   const [imageQuality, setImageQuality] = useState(80);
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
+  const flipBookRef = useRef(null);
+
+    // Navigate to the next page
+    const handleNext = () => {
+      if (flipBookRef.current) {
+        flipBookRef.current.pageFlip().flipNext();
+      }
+    };
+  
+    // Navigate to the previous page
+    const handlePrevious = () => {
+      if (flipBookRef.current) {
+        flipBookRef.current.pageFlip().flipPrev();
+      }
+    };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -177,32 +193,54 @@ export default function FirstPanel({
           ))}
         </div>
       ) : (
-        // Web: HTML Flipbook
-        <HTMLFlipBook width={500} height={680} className="mt-12 overflow-hidden">
-          {data.map((i, index) => (
-            <div key={getRandomId()} className="flip-book-page">
-              <Image
-                src={`https:///shiroko.co/api/image/?url=${encodeURIComponent(
-                  i.url,
-                )}${
-                  i?.headers?.Referer
-                    ? `&headers=${encodeURIComponent(
-                        JSON.stringify(i?.headers),
-                      )}`
-                    : `&headers=${encodeURIComponent(
-                        JSON.stringify(getHeaders(chapter.providerId))
-                      )}`
-                    }`}
-                alt={index}
-                width={500}
-                height={680}
-                quality={imageQuality}
-                priority
-              />
-            </div>
-          ))}
-        </HTMLFlipBook>
-      )}
-    </section>
+         // Web: HTML Flipbook
+         <div className="w-full flex flex-col items-center">
+         <HTMLFlipBook 
+           ref={flipBookRef}
+           width={500} 
+           height={730} 
+           className="mt-14 overflow-hidden"
+         >
+           {data.map((i, index) => (
+             <div key={getRandomId()} className="flip-book-page">
+               <Image
+                 src={`https:///shiroko.co/api/image/?url=${encodeURIComponent(
+                   i.url
+                 )}${
+                   i?.headers?.Referer
+                     ? `&headers=${encodeURIComponent(
+                         JSON.stringify(i?.headers)
+                       )}`
+                     : `&headers=${encodeURIComponent(
+                         JSON.stringify(getHeaders(chapter.providerId))
+                       )}`
+                 }`}
+                 alt={`Page ${index + 1}`}
+                 width={500}
+                 height={730}
+                 quality={imageQuality}
+                 priority
+               />
+             </div>
+           ))}
+         </HTMLFlipBook>
+         {/* Navigation Buttons */}
+         <div className="fixed bottom-0 left-0 flex items-center justify-start px-12 py-4 pointer-events-auto">
+          <button
+            onClick={handlePrevious}
+            className="flex items-center justify-center bg-transparent border-2 border-[#BA66DB] text-white p-3 w-[80px] h-[50px] hover:bg-[#BA66DB] hover:text-white transition-all"
+          >
+            Previous
+          </button>
+          <button
+            onClick={handleNext}
+            className="flex items-center justify-center bg-transparent border-2 border-[#BA66DB] text-white p-3 w-[80px] h-[50px] hover:bg-[#BA66DB] hover:text-white transition-all ml-4"
+          >
+            Next
+          </button>
+        </div>
+       </div>
+     )}
+   </section>
   );
 }
