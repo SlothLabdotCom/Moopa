@@ -178,7 +178,7 @@ export default function FirstPanel({
         </div>
       ) : (
         // Web: HTML Flipbook
-        <HTMLFlipBook width={500} height={680} className="mt-12 overflow-hidden">
+        <HTMLFlipBook width={500} height={730} className="mt-14 overflow-hidden">
           {data.map((i, index) => (
             <div key={getRandomId()} className="flip-book-page">
               <Image
@@ -195,7 +195,7 @@ export default function FirstPanel({
                     }`}
                 alt={index}
                 width={500}
-                height={680}
+                height={730}
                 quality={imageQuality}
                 priority
               />
